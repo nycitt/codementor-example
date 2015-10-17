@@ -1,3 +1,16 @@
 body {
   background-color: red;
 }
+
+.cats {
+  position: relative;
+}
+
+.cats li {
+  background-color: orange;
+  width: 100px;
+  height: 200px;
+  border: 1px solid black;
+  list-style: none;
+  text-align: center;
+}

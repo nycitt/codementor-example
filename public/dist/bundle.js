@@ -38339,7 +38339,7 @@
 			//put other possible states here
 
 			this.$el.html(tpl({
-				is_loaded: state === 'loaded'
+				
 			}));
 
 			//jQuery stuff goes here
@@ -39560,6 +39560,8 @@
 	    'click li': 'onClickCat'
 	  },
 
+	  className: 'cats',
+
 	  render: function () {
 	    var self = this;
 
@@ -39577,7 +39579,12 @@
 	    }
 
 	    var data = {
-	      cats: self.cats
+	      cats: _.map(self.cats, function (cat, index) {
+	        cat.zIndex = index;
+	        cat.left = index * 5 + 'px';
+	        cat.top = index * 5 + 'px';
+	        return cat;
+	      })
 	    };
 
 	    this.catsProfile = new CatsProfileView({
@@ -39594,7 +39601,11 @@
 	  },
 
 	  onClickCat: function (e) {
+<<<<<<< Updated upstream
 	    console.log($(e.target).data('id'));
+=======
+	    $(e.target).remove();
+>>>>>>> Stashed changes
 	  }
 	});
 
@@ -39606,7 +39617,13 @@
 	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
 	    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-	  return "<li data-id="
+	  return "<li style=\"z-index: "
+	    + alias4(((helper = (helper = helpers.zIndex || (depth0 != null ? depth0.zIndex : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"zIndex","hash":{},"data":data}) : helper)))
+	    + "; position: absolute; top: "
+	    + alias4(((helper = (helper = helpers.top || (depth0 != null ? depth0.top : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"top","hash":{},"data":data}) : helper)))
+	    + "; left: "
+	    + alias4(((helper = (helper = helpers.left || (depth0 != null ? depth0.left : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"left","hash":{},"data":data}) : helper)))
+	    + "\" data-id="
 	    + alias4(((helper = (helper = helpers.objectId || (depth0 != null ? depth0.objectId : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"objectId","hash":{},"data":data}) : helper)))
 	    + ">"
 	    + alias4(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
@@ -39707,7 +39724,7 @@
 
 
 	// module
-	exports.push([module.id, "body {\n  background-color: red;\n}", ""]);
+	exports.push([module.id, "body {\n  background-color: red;\n}\n\n.cats {\n  position: relative;\n}\n\n.cats li {\n  background-color: orange;\n  width: 100px;\n  height: 200px;\n  border: 1px solid black;\n  list-style: none;\n  text-align: center;\n}", ""]);
 
 	// exports
 

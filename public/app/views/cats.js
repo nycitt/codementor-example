@@ -10,6 +10,8 @@ module.exports = Backbone.View.extend({
     'click li': 'onClickCat'
   },
 
+  className: 'cats',
+
   render: function () {
     var self = this;
 
@@ -27,7 +29,12 @@ module.exports = Backbone.View.extend({
     }
 
     var data = {
-      cats: self.cats
+      cats: _.map(self.cats, function (cat, index) {
+        cat.zIndex = index;
+        cat.left = index * 5 + 'px';
+        cat.top = index * 5 + 'px';
+        return cat;
+      })
     };
 
     this.catsProfile = new CatsProfileView({
@@ -44,6 +51,10 @@ module.exports = Backbone.View.extend({
   },
 
   onClickCat: function (e) {
+<<<<<<< Updated upstream
     console.log($(e.target).data('id'));
+=======
+    $(e.target).remove();
+>>>>>>> Stashed changes
   }
 });
