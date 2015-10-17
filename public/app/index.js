@@ -3,7 +3,9 @@ var _ = require('underscore');
 var Parse = require('parse').Parse;
 
 require('backbone');
+require('jquery-ui');
 require('bootstrap/dist/css/bootstrap.css');
+require('./styles.css');
 
 var Router = require('./router');
 

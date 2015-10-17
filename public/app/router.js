@@ -3,7 +3,11 @@ var CatsView = require('./views/cats');
 var DogsView = require('./views/dogs');
 
 module.exports = Backbone.Router.extend({
-	routes: {
+	initialize: function () {
+
+  },
+
+  routes: {
 		'': function () {
 			appendView(new HomeView().render());
 		},
