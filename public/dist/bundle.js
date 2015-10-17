@@ -39580,10 +39580,6 @@
 	      cats: self.cats
 	    };
 
-	    this.catsProfile = new CatsProfileView({
-
-	    }).render();
-
 	    this.$el.html(
 	      tpl(data)
 	    );
@@ -39594,7 +39590,15 @@
 	  },
 
 	  onClickCat: function (e) {
-	    console.log($(e.target).data('id'));
+	    var id = $(e.target).data('id');
+	    var cat = _.findWhere(this.cats, {
+	      objectId: id
+	    });
+
+	    this.catsProfile = new CatsProfileView({
+	      cat: cat,
+	      el: this.$('.cats-profile')
+	    }).render();
 	  }
 	});
 
@@ -39616,7 +39620,7 @@
 
 	  return "<ul>\n"
 	    + ((stack1 = helpers.each.call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.cats : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-	    + "</ul>\n\n<button class=\"add-cat\">Add A Cat</button>\n";
+	    + "</ul>\n\n<button class=\"add-cat\">Add A Cat</button>\n\n<div class=\"cats-profile\">\n\n</div>";
 	},"useData":true});
 
 /***/ },
@@ -39716,14 +39720,35 @@
 /* 121 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var tpl = __webpack_require__(115);
+	var tpl = __webpack_require__(122);
 	var _ = __webpack_require__(4);
 
 	module.exports = Backbone.View.extend({
+	  initialize : function (opts) {
+	    this.cat = opts.cat;
+	  },
+
 	  render: function () {
-	    
+	    this.$el.html(tpl(this.cat));
 	  }
 	})
+
+/***/ },
+/* 122 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Handlebars = __webpack_require__(95);
+	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+	    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
+
+	  return "<h1>"
+	    + alias4(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
+	    + "</h1>\n<img style=\"width: 200px\" src=\""
+	    + alias4(((helper = (helper = helpers.image_url || (depth0 != null ? depth0.image_url : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"image_url","hash":{},"data":data}) : helper)))
+	    + "\"/>\n<p>Age: "
+	    + alias4(((helper = (helper = helpers.age || (depth0 != null ? depth0.age : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"age","hash":{},"data":data}) : helper)))
+	    + "</p>";
+	},"useData":true});
 
 /***/ }
 /******/ ]);

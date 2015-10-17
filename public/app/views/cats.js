@@ -30,10 +30,6 @@ module.exports = Backbone.View.extend({
       cats: self.cats
     };
 
-    this.catsProfile = new CatsProfileView({
-
-    }).render();
-
     this.$el.html(
       tpl(data)
     );
@@ -44,6 +40,14 @@ module.exports = Backbone.View.extend({
   },
 
   onClickCat: function (e) {
-    console.log($(e.target).data('id'));
+    var id = $(e.target).data('id');
+    var cat = _.findWhere(this.cats, {
+      objectId: id
+    });
+
+    this.catsProfile = new CatsProfileView({
+      cat: cat,
+      el: this.$('.cats-profile')
+    }).render();
   }
 });
