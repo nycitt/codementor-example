@@ -51,11 +51,11 @@
 	__webpack_require__(81);
 	__webpack_require__(82);
 	__webpack_require__(83);
-	__webpack_require__(92);
+	__webpack_require__(119);
 
-	var Router = __webpack_require__(94);
+	var Router = __webpack_require__(92);
 
-	var containerTpl = __webpack_require__(121);
+	var containerTpl = __webpack_require__(118);
 
 	var app = {
 		init: function () {
@@ -38300,49 +38300,9 @@
 /* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(93);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(91)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./styles.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./styles.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 93 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(85)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "body {\n  background-color: red;\n}\n\n.cats {\n  position: relative;\n}\n\n.cats li {\n  background-color: orange;\n  width: 100px;\n  height: 200px;\n  border: 1px solid black;\n  list-style: none;\n  text-align: center;\n}", ""]);
-
-	// exports
-
-
-/***/ },
-/* 94 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var HomeView = __webpack_require__(95);
-	var CatsView = __webpack_require__(116);
-	var DogsView = __webpack_require__(119);
+	var HomeView = __webpack_require__(93);
+	var CatsView = __webpack_require__(114);
+	var DogsView = __webpack_require__(116);
 
 	module.exports = Backbone.Router.extend({
 		initialize: function () {
@@ -38369,10 +38329,10 @@
 	}
 
 /***/ },
-/* 95 */
+/* 93 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var tpl = __webpack_require__(96);
+	var tpl = __webpack_require__(94);
 
 	module.exports = Backbone.View.extend({
 		render: function (data) {
@@ -38389,10 +38349,10 @@
 	});
 
 /***/ },
-/* 96 */
+/* 94 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(97);
+	var Handlebars = __webpack_require__(95);
 	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
 	    return "	Loading...\n";
 	},"3":function(container,depth0,helpers,partials,data) {
@@ -38410,16 +38370,16 @@
 	},"useData":true});
 
 /***/ },
-/* 97 */
+/* 95 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Create a simple path alias to allow browserify to resolve
 	// the runtime on a supported path.
-	module.exports = __webpack_require__(98)['default'];
+	module.exports = __webpack_require__(96)['default'];
 
 
 /***/ },
-/* 98 */
+/* 96 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38433,30 +38393,30 @@
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
-	var _handlebarsBase = __webpack_require__(99);
+	var _handlebarsBase = __webpack_require__(97);
 
 	// Each of these augment the Handlebars object. No need to setup here.
 	// (This is done to easily share code between commonjs and browse envs)
 
 	var base = _interopRequireWildcard(_handlebarsBase);
 
-	var _handlebarsSafeString = __webpack_require__(113);
+	var _handlebarsSafeString = __webpack_require__(111);
 
 	var _handlebarsSafeString2 = _interopRequireDefault(_handlebarsSafeString);
 
-	var _handlebarsException = __webpack_require__(101);
+	var _handlebarsException = __webpack_require__(99);
 
 	var _handlebarsException2 = _interopRequireDefault(_handlebarsException);
 
-	var _handlebarsUtils = __webpack_require__(100);
+	var _handlebarsUtils = __webpack_require__(98);
 
 	var Utils = _interopRequireWildcard(_handlebarsUtils);
 
-	var _handlebarsRuntime = __webpack_require__(114);
+	var _handlebarsRuntime = __webpack_require__(112);
 
 	var runtime = _interopRequireWildcard(_handlebarsRuntime);
 
-	var _handlebarsNoConflict = __webpack_require__(115);
+	var _handlebarsNoConflict = __webpack_require__(113);
 
 	// For compatibility and usage outside of module systems, make the Handlebars object a namespace
 
@@ -38492,7 +38452,7 @@
 
 
 /***/ },
-/* 99 */
+/* 97 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38503,17 +38463,17 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _utils = __webpack_require__(100);
+	var _utils = __webpack_require__(98);
 
-	var _exception = __webpack_require__(101);
+	var _exception = __webpack_require__(99);
 
 	var _exception2 = _interopRequireDefault(_exception);
 
-	var _helpers = __webpack_require__(102);
+	var _helpers = __webpack_require__(100);
 
-	var _decorators = __webpack_require__(110);
+	var _decorators = __webpack_require__(108);
 
-	var _logger = __webpack_require__(112);
+	var _logger = __webpack_require__(110);
 
 	var _logger2 = _interopRequireDefault(_logger);
 
@@ -38602,7 +38562,7 @@
 
 
 /***/ },
-/* 100 */
+/* 98 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -38732,7 +38692,7 @@
 
 
 /***/ },
-/* 101 */
+/* 99 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -38778,7 +38738,7 @@
 
 
 /***/ },
-/* 102 */
+/* 100 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38789,31 +38749,31 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _helpersBlockHelperMissing = __webpack_require__(103);
+	var _helpersBlockHelperMissing = __webpack_require__(101);
 
 	var _helpersBlockHelperMissing2 = _interopRequireDefault(_helpersBlockHelperMissing);
 
-	var _helpersEach = __webpack_require__(104);
+	var _helpersEach = __webpack_require__(102);
 
 	var _helpersEach2 = _interopRequireDefault(_helpersEach);
 
-	var _helpersHelperMissing = __webpack_require__(105);
+	var _helpersHelperMissing = __webpack_require__(103);
 
 	var _helpersHelperMissing2 = _interopRequireDefault(_helpersHelperMissing);
 
-	var _helpersIf = __webpack_require__(106);
+	var _helpersIf = __webpack_require__(104);
 
 	var _helpersIf2 = _interopRequireDefault(_helpersIf);
 
-	var _helpersLog = __webpack_require__(107);
+	var _helpersLog = __webpack_require__(105);
 
 	var _helpersLog2 = _interopRequireDefault(_helpersLog);
 
-	var _helpersLookup = __webpack_require__(108);
+	var _helpersLookup = __webpack_require__(106);
 
 	var _helpersLookup2 = _interopRequireDefault(_helpersLookup);
 
-	var _helpersWith = __webpack_require__(109);
+	var _helpersWith = __webpack_require__(107);
 
 	var _helpersWith2 = _interopRequireDefault(_helpersWith);
 
@@ -38830,14 +38790,14 @@
 
 
 /***/ },
-/* 103 */
+/* 101 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	exports.__esModule = true;
 
-	var _utils = __webpack_require__(100);
+	var _utils = __webpack_require__(98);
 
 	exports['default'] = function (instance) {
 	  instance.registerHelper('blockHelperMissing', function (context, options) {
@@ -38875,7 +38835,7 @@
 
 
 /***/ },
-/* 104 */
+/* 102 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38885,9 +38845,9 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _utils = __webpack_require__(100);
+	var _utils = __webpack_require__(98);
 
-	var _exception = __webpack_require__(101);
+	var _exception = __webpack_require__(99);
 
 	var _exception2 = _interopRequireDefault(_exception);
 
@@ -38975,7 +38935,7 @@
 
 
 /***/ },
-/* 105 */
+/* 103 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38985,7 +38945,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _exception = __webpack_require__(101);
+	var _exception = __webpack_require__(99);
 
 	var _exception2 = _interopRequireDefault(_exception);
 
@@ -39006,14 +38966,14 @@
 
 
 /***/ },
-/* 106 */
+/* 104 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	exports.__esModule = true;
 
-	var _utils = __webpack_require__(100);
+	var _utils = __webpack_require__(98);
 
 	exports['default'] = function (instance) {
 	  instance.registerHelper('if', function (conditional, options) {
@@ -39041,7 +39001,7 @@
 
 
 /***/ },
-/* 107 */
+/* 105 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -39073,7 +39033,7 @@
 
 
 /***/ },
-/* 108 */
+/* 106 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -39091,14 +39051,14 @@
 
 
 /***/ },
-/* 109 */
+/* 107 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	exports.__esModule = true;
 
-	var _utils = __webpack_require__(100);
+	var _utils = __webpack_require__(98);
 
 	exports['default'] = function (instance) {
 	  instance.registerHelper('with', function (context, options) {
@@ -39130,7 +39090,7 @@
 
 
 /***/ },
-/* 110 */
+/* 108 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39141,7 +39101,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _decoratorsInline = __webpack_require__(111);
+	var _decoratorsInline = __webpack_require__(109);
 
 	var _decoratorsInline2 = _interopRequireDefault(_decoratorsInline);
 
@@ -39152,14 +39112,14 @@
 
 
 /***/ },
-/* 111 */
+/* 109 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	exports.__esModule = true;
 
-	var _utils = __webpack_require__(100);
+	var _utils = __webpack_require__(98);
 
 	exports['default'] = function (instance) {
 	  instance.registerDecorator('inline', function (fn, props, container, options) {
@@ -39187,14 +39147,14 @@
 
 
 /***/ },
-/* 112 */
+/* 110 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	exports.__esModule = true;
 
-	var _utils = __webpack_require__(100);
+	var _utils = __webpack_require__(98);
 
 	var logger = {
 	  methodMap: ['debug', 'info', 'warn', 'error'],
@@ -39240,7 +39200,7 @@
 
 
 /***/ },
-/* 113 */
+/* 111 */
 /***/ function(module, exports) {
 
 	// Build out our basic SafeString type
@@ -39261,7 +39221,7 @@
 
 
 /***/ },
-/* 114 */
+/* 112 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39281,15 +39241,15 @@
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
-	var _utils = __webpack_require__(100);
+	var _utils = __webpack_require__(98);
 
 	var Utils = _interopRequireWildcard(_utils);
 
-	var _exception = __webpack_require__(101);
+	var _exception = __webpack_require__(99);
 
 	var _exception2 = _interopRequireDefault(_exception);
 
-	var _base = __webpack_require__(99);
+	var _base = __webpack_require__(97);
 
 	function checkRevision(compilerInfo) {
 	  var compilerRevision = compilerInfo && compilerInfo[0] || 1,
@@ -39559,7 +39519,7 @@
 
 
 /***/ },
-/* 115 */
+/* 113 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/* global window */
@@ -39585,13 +39545,13 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 116 */
+/* 114 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var tpl = __webpack_require__(117);
+	var tpl = __webpack_require__(115);
 	var _ = __webpack_require__(4);
 
-	var CatsProfileView = __webpack_require__(118);
+	var CatsProfileView = __webpack_require__(121);
 
 	var Parse = __webpack_require__(5).Parse;
 
@@ -39600,6 +39560,8 @@
 	    'click li': 'onClickCat'
 	  },
 
+	  className: 'cats',
+
 	  render: function () {
 	    var self = this;
 
@@ -39607,7 +39569,6 @@
 	      var Cats = Parse.Object.extend('Cats');
 
 	        (new Parse.Query(Cats))
-	        .include(['owner'])
 	        .find()
 	        .then(function(data){
 	          self.cats = _.invoke(data, 'toJSON');
@@ -39618,7 +39579,12 @@
 	    }
 
 	    var data = {
-	      cats: self.cats
+	      cats: _.map(self.cats, function (cat, index) {
+	        cat.zIndex = index;
+	        cat.left = index * 5 + 'px';
+	        cat.top = index * 5 + 'px';
+	        return cat;
+	      })
 	    };
 
 	    this.catsProfile = new CatsProfileView({
@@ -39635,15 +39601,19 @@
 	  },
 
 	  onClickCat: function (e) {
+<<<<<<< Updated upstream
 	    console.log($(e.target).data('id'));
+=======
+	    $(e.target).remove();
+>>>>>>> Stashed changes
 	  }
 	});
 
 /***/ },
-/* 117 */
+/* 115 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(97);
+	var Handlebars = __webpack_require__(95);
 	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
 	    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
@@ -39667,23 +39637,10 @@
 	},"useData":true});
 
 /***/ },
-/* 118 */
+/* 116 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var tpl = __webpack_require__(117);
-	var _ = __webpack_require__(4);
-
-	module.exports = Backbone.View.extend({
-	  render: function () {
-	    
-	  }
-	})
-
-/***/ },
-/* 119 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var tpl = __webpack_require__(120);
 	var _ = __webpack_require__(4);
 
 	module.exports = Backbone.View.extend({
@@ -39699,19 +39656,19 @@
 	});
 
 /***/ },
-/* 120 */
+/* 117 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(97);
+	var Handlebars = __webpack_require__(95);
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    return "This is the dogs page";
 	},"useData":true});
 
 /***/ },
-/* 121 */
+/* 118 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(97);
+	var Handlebars = __webpack_require__(95);
 	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
 	    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
@@ -39731,6 +39688,59 @@
 	    + alias4(((helper = (helper = helpers.footer || (depth0 != null ? depth0.footer : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"footer","hash":{},"data":data}) : helper)))
 	    + "\n	</div>\n</div>";
 	},"useData":true});
+
+/***/ },
+/* 119 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(120);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(91)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./styles.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./styles.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 120 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(85)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "body {\n  background-color: red;\n}\n\n.cats {\n  position: relative;\n}\n\n.cats li {\n  background-color: orange;\n  width: 100px;\n  height: 200px;\n  border: 1px solid black;\n  list-style: none;\n  text-align: center;\n}", ""]);
+
+	// exports
+
+
+/***/ },
+/* 121 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var tpl = __webpack_require__(115);
+	var _ = __webpack_require__(4);
+
+	module.exports = Backbone.View.extend({
+	  render: function () {
+	    
+	  }
+	})
 
 /***/ }
 /******/ ]);
