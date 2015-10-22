@@ -11,7 +11,7 @@ var app = {
 			'socket',
 			'localTunnel',
 			// 'twilio',
-			// 'mailgun',
+			'mailgun',
 			// 'parse'
 		];
 
@@ -19,9 +19,24 @@ var app = {
 			setup[module].call(this);
 		}, this);
 
+		this.app.post('/cats', function (req, res) {
+			app.mailgun.sendText(
+			  	'adz@nycitt.com',
+			    'adz@nycitt.com',
+			    'Hello Works',
+			    req.body.text,
+			    function (err) {
+			    	if (!err) {
+			    		res.json({
+			    			success: true
+			    		})
+			    	}
+			    }
+			);
+		});
+
 		// Put after all your this.app.get/post routes
 		setup.pushState.call(this);
-		console.log('hello')
 	},
 };
 

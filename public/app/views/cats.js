@@ -17,6 +17,7 @@ module.exports = Backbone.View.extend({
       var Cats = Parse.Object.extend('Cats');
 
         (new Parse.Query(Cats))
+        .include(['owner'])
         .find()
         .then(function(data){
           self.cats = _.invoke(data, 'toJSON');
