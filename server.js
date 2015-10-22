@@ -13,7 +13,7 @@ var app = {
 			'localTunnel',
 			// 'twilio',
 			'mailgun',
-			// 'parse'
+			'parse'
 		];
 
 		_.each(modules, function (module) {

@@ -1,16 +1,18 @@
-var cats = [{
-  name: 'Alvin',
-  age: 10
-}];
+var Parse = require('parse/node');
 
 module.exports = {
   get: function (req, res) {
-    res.json(cats)
+    var Cats = Parse.Object.extend('Cats');
+
+    (new Parse.Query(Cats))
+    .include(['owner'])
+    .find()
+    .then(function(data){
+      res.json(data);
+    });
   },
   post: function (req, res) {
-    cats.push(req.body);
-    res.json(req.body);
-    console.log(cats);
+    
   },
   delete: function (req, res) {
     //do something with req.body
