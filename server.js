@@ -22,7 +22,7 @@ var app = {
 
 		this.app.get('/api/cats', cats.get);
 		this.app.post('/api/cats', cats.post);
-		// this.app.update('/cats', cats.post);
+		this.app.put('/api/cats/:id', cats.update);
 		// this.app.delete('/cats', cats.post);
 
 		// Put after all your this.app.get/post routes

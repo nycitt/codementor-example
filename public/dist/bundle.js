@@ -39593,6 +39593,7 @@
 
 	var CatsProfileView = __webpack_require__(118);
 	var CatsCollection = __webpack_require__(122);
+	var CatView = __webpack_require__(124);
 
 	var Parse = __webpack_require__(5).Parse;
 
@@ -39604,25 +39605,15 @@
 	  render: function () {
 	    var self = this;
 
-	    if (!this.cats) {
-	      /*
-	      var Cats = Parse.Object.extend('Cats');
-
-	        (new Parse.Query(Cats))
-	        .include(['owner'])
-	        .find()
-	        .then(function(data){
-	          self.cats = _.invoke(data, 'toJSON');
-	          console.log(self.cats);
-	          self.render();
-	        });*/
+	    if (!this.catsCollection) {
 	      this.catsCollection = new CatsCollection();
 	      this.catsCollection.fetch().then(function (){
-	        self.catsCollection.at(0).growOlder();
-	        console.log(self.catsCollection.at(0).get('age'));
-
-	        self.cats = self.catsCollection.toJSON();
 	        self.render();
+	        self.catsCollection.each(function (catModel) {
+	          new CatView({
+	            model: catModel
+	          }).render().$el.appendTo(this.$('.cats'));
+	        });
 	      });
 	      return this;
 	    }
@@ -39654,20 +39645,8 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var Handlebars = __webpack_require__(97);
-	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
-	    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
-
-	  return "<li data-id="
-	    + alias4(((helper = (helper = helpers.objectId || (depth0 != null ? depth0.objectId : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"objectId","hash":{},"data":data}) : helper)))
-	    + ">"
-	    + alias4(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
-	    + "</li>\n";
-	},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    var stack1;
-
-	  return "<ul>\n"
-	    + ((stack1 = helpers.each.call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.cats : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-	    + "</ul>\n\n<button class=\"add-cat\">Add A Cat</button>\n";
+	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+	    return "<ul class=\"cats\">\n</ul>\n\n<button class=\"add-cat\">Add A Cat</button>\n";
 	},"useData":true});
 
 /***/ },
@@ -39752,10 +39731,48 @@
 
 	var Backbone = __webpack_require__(81);
 	module.exports = Backbone.Model.extend({
+	  idAttribute: 'objectId',
 	  growOlder: function () {
 	    this.set('age', this.get('age') + 1);
 	  }
 	});
+
+/***/ },
+/* 124 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var tpl = __webpack_require__(125)
+	module.exports = Backbone.View.extend({
+	  events: {
+	    'click .submit': 'onSubmit'
+	  },
+	  render: function () {
+	    this.$el.html(tpl(this.model.toJSON()));
+
+	    return this;
+	  },
+	  onSubmit: function () {
+	    this.model.save({
+	      name: this.$('.name').val()
+	    });
+	    return false;
+	  }
+	});
+
+/***/ },
+/* 125 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Handlebars = __webpack_require__(97);
+	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+	    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
+
+	  return "<li data-id="
+	    + alias4(((helper = (helper = helpers.objectId || (depth0 != null ? depth0.objectId : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"objectId","hash":{},"data":data}) : helper)))
+	    + ">\n  <form>\n    <input class=\"name\" type=\"text\" value=\""
+	    + alias4(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
+	    + "\"/>\n    <input type=\"submit\" class=\"submit\">\n  </form>\n</li>";
+	},"useData":true});
 
 /***/ }
 /******/ ]);

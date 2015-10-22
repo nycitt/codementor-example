@@ -3,6 +3,7 @@ var _ = require('underscore');
 
 var CatsProfileView = require('./cats-profile');
 var CatsCollection = require('../collections/cats');
+var CatView = require('./cat');
 
 var Parse = require('parse').Parse;
 
@@ -14,25 +15,15 @@ module.exports = Backbone.View.extend({
   render: function () {
     var self = this;
 
-    if (!this.cats) {
-      /*
-      var Cats = Parse.Object.extend('Cats');
-
-        (new Parse.Query(Cats))
-        .include(['owner'])
-        .find()
-        .then(function(data){
-          self.cats = _.invoke(data, 'toJSON');
-          console.log(self.cats);
-          self.render();
-        });*/
+    if (!this.catsCollection) {
       this.catsCollection = new CatsCollection();
       this.catsCollection.fetch().then(function (){
-        self.catsCollection.at(0).growOlder();
-        console.log(self.catsCollection.at(0).get('age'));
-
-        self.cats = self.catsCollection.toJSON();
         self.render();
+        self.catsCollection.each(function (catModel) {
+          new CatView({
+            model: catModel
+          }).render().$el.appendTo(this.$('.cats'));
+        });
       });
       return this;
     }
