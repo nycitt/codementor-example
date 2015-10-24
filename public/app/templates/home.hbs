@@ -1,11 +1,13 @@
-{{#if is_loading}}
-	Loading...
-{{/if}}
+<form class="signup-form">
+  <h2>Signup</h2>
+  Email: <input type="text" name="email"/>
+  Password: <input type="password" name="password"/>
+  <input type="submit"/>
+</form>
 
-{{#if is_loaded}}
-	Home Page
-{{/if}}
-
-{{#if is_error}}
-	Error
-{{/if}}
+<form class="login-form">
+  <h2>Login</h2>
+  Email: <input type="text" name="email"/>
+  Password: <input type="password" name="password"/>
+  <input type="submit"/>
+</form>

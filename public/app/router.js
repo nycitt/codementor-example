@@ -21,7 +21,12 @@ module.exports = Backbone.Router.extend({
 });
 
 function appendView(view) {
-	$('.main')
+	if(this.currentView) {
+    this.currentView.remove();
+  }
+  $('.main')
 		.empty()
 		.append(view.$el);
+
+  this.currentView = view;
 }

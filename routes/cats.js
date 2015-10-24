@@ -3,7 +3,6 @@ var Cats = Parse.Object.extend('Cats');
 
 module.exports = {
   get: function (req, res) {
-  
     (new Parse.Query(Cats))
     .include(['owner'])
     .find()
