@@ -38359,9 +38359,14 @@
 	});
 
 	function appendView(view) {
-		$('.main')
+		if(this.currentView) {
+	    this.currentView.remove();
+	  }
+	  $('.main')
 			.empty()
 			.append(view.$el);
+
+	  this.currentView = view;
 	}
 
 /***/ },
@@ -38369,19 +38374,55 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var tpl = __webpack_require__(96);
+	var Parse = __webpack_require__(5).Parse;
 
 	module.exports = Backbone.View.extend({
-		render: function (data) {
-			//put other possible states here
+		events: {
+	    'submit .signup-form': 'onSignupFormSubmit',
+	    'submit .login-form': 'onSignInFormSubmit'
+	  },
+	  render: function (data) {
+			//Is there a user logged in?
+	    if(Parse.User.current()) {
+	      window.location = '/cats';
+	      return this;
+	    }
 
 			this.$el.html(tpl({
-				is_loaded: state === 'loaded'
 			}));
 
 			//jQuery stuff goes here
 			
 			return this;
-		}
+		},
+	  onSignupFormSubmit: function (e) {
+	    var username = this.$('.signup-form [name="email"]').val();
+	    var password = this.$('.signup-form [name="password"]').val();
+	    new Parse.User({
+	      username: username,
+	      password: password
+	    }).save().then(function () {
+	      return Parse.User.logIn(username, password);
+	    }).then(function () {
+	      window.location = '/cats';
+	    });
+
+	    e.preventDefault();
+	    return false;
+	  },
+
+	  onSignInFormSubmit : function (e) {
+	    var username = this.$('.login-form [name="email"]').val();
+	    var password = this.$('.login-form [name="password"]').val();
+	    
+	    Parse.User.logIn(username, password).then(function () {
+	      window.location = '/cats';
+	    });
+
+	    e.preventDefault();
+	    return false;
+	  }
+
 	});
 
 /***/ },
@@ -38389,20 +38430,8 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var Handlebars = __webpack_require__(97);
-	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
-	    return "	Loading...\n";
-	},"3":function(container,depth0,helpers,partials,data) {
-	    return "	Home Page\n";
-	},"5":function(container,depth0,helpers,partials,data) {
-	    return "	Error\n";
-	},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    var stack1, alias1=depth0 != null ? depth0 : {};
-
-	  return ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.is_loading : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-	    + "\n"
-	    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.is_loaded : depth0),{"name":"if","hash":{},"fn":container.program(3, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-	    + "\n"
-	    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.is_error : depth0),{"name":"if","hash":{},"fn":container.program(5, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "");
+	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+	    return "<form class=\"signup-form\">\n  <h2>Signup</h2>\n  Email: <input type=\"text\" name=\"email\"/>\n  Password: <input type=\"password\" name=\"password\"/>\n  <input type=\"submit\"/>\n</form>\n\n<form class=\"login-form\">\n  <h2>Login</h2>\n  Email: <input type=\"text\" name=\"email\"/>\n  Password: <input type=\"password\" name=\"password\"/>\n  <input type=\"submit\"/>\n</form>";
 	},"useData":true});
 
 /***/ },
@@ -39588,43 +39617,39 @@
 	var _ = __webpack_require__(4);
 
 	var CatsProfileView = __webpack_require__(118);
+	var CatsCollection = __webpack_require__(119);
+	var CatView = __webpack_require__(121);
+	var BaseView = __webpack_require__(123);
 
 	var Parse = __webpack_require__(5).Parse;
 
-	module.exports = Backbone.View.extend({
+	module.exports = BaseView.extend({
 	  events: {
 	    'click li': 'onClickCat'
 	  },
 
 	  render: function () {
 	    var self = this;
+	    this.subViews = [];
 
-	    if (!this.cats) {
-	      var Cats = Parse.Object.extend('Cats');
-
-	        (new Parse.Query(Cats))
-	        .include(['owner'])
-	        .find()
-	        .then(function(data){
-	          self.cats = _.invoke(data, 'toJSON');
-	          console.log(self.cats);
-	          self.render();
+	    if (!this.catsCollection) {
+	      this.catsCollection = new CatsCollection();
+	      this.catsCollection.fetch().then(function (){
+	        self.render();
+	        self.catsCollection.each(function (cat) {
+	          self.subViews.push(
+	            new CatView({
+	              model: cat
+	            }).render().$el.appendTo(this.$('.cats'))
+	          );
 	        });
+	      });
 	      return this;
 	    }
 
-	    var data = {
-	      cats: self.cats
-	    };
-
-	    this.catsProfile = new CatsProfileView({
-
-	    }).render();
-
 	    this.$el.html(
-	      tpl(data)
+	      tpl()
 	    );
-
 	    //jQuery stuff goes here
 	    
 	    return this;
@@ -39632,6 +39657,13 @@
 
 	  onClickCat: function (e) {
 	    console.log($(e.target).data('id'));
+	  },
+
+	  remove: function () {
+	    // Put all functions to clean up your view's specifics here
+
+	    // Calls the Parent's remove function
+	    return BaseView.prototype.remove.apply(this, arguments);
 	  }
 	});
 
@@ -39640,20 +39672,8 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var Handlebars = __webpack_require__(97);
-	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
-	    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
-
-	  return "<li data-id="
-	    + alias4(((helper = (helper = helpers.objectId || (depth0 != null ? depth0.objectId : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"objectId","hash":{},"data":data}) : helper)))
-	    + ">"
-	    + alias4(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
-	    + "</li>\n";
-	},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    var stack1;
-
-	  return "<ul>\n"
-	    + ((stack1 = helpers.each.call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.cats : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-	    + "</ul>\n\n<button class=\"add-cat\">Add A Cat</button>\n";
+	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+	    return "<ul class=\"cats\">\n</ul>\n\n<button class=\"add-cat\">Add A Cat</button>\n";
 	},"useData":true});
 
 /***/ },
@@ -39670,11 +39690,84 @@
 	})
 
 /***/ },
-/* 119 */,
-/* 120 */,
-/* 121 */,
-/* 122 */,
-/* 123 */,
+/* 119 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var CatModel = __webpack_require__(120);
+	module.exports = Backbone.Collection.extend({
+	  url: '/api/cats',
+	  model: CatModel
+	});
+
+/***/ },
+/* 120 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Backbone = __webpack_require__(81);
+	module.exports = Backbone.Model.extend({
+	  idAttribute: 'objectId',
+	  growOlder: function () {
+	    this.set('age', this.get('age') + 1);
+	  }
+	});
+
+/***/ },
+/* 121 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var tpl = __webpack_require__(122)
+	module.exports = Backbone.View.extend({
+	  events: {
+	    'click .submit': 'onSubmit'
+	  },
+	  render: function () {
+	    this.$el.html(tpl(this.model.toJSON()));
+
+	    return this;
+	  },
+	  onSubmit: function () {
+	    this.model.save({
+	      name: this.$('.name').val()
+	    });
+	    return false;
+	  }
+	});
+
+/***/ },
+/* 122 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Handlebars = __webpack_require__(97);
+	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+	    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
+
+	  return "<li data-id="
+	    + alias4(((helper = (helper = helpers.objectId || (depth0 != null ? depth0.objectId : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"objectId","hash":{},"data":data}) : helper)))
+	    + ">\n  <form>\n    <input class=\"name\" type=\"text\" value=\""
+	    + alias4(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
+	    + "\"/>\n    <input type=\"submit\" class=\"submit\">\n  </form>\n</li>";
+	},"useData":true});
+
+/***/ },
+/* 123 */
+/***/ function(module, exports) {
+
+	
+	module.exports = Backbone.View.extend({
+	   initialize: function () {
+	    this.subViews = {};
+	   },
+
+	   remove: function () {
+	    _.each(this.subViews, function (subView) {
+	      subView.remove();
+	    });
+
+	    Backbone.View.prototype.remove(); 
+	   }
+	});
+
+/***/ },
 /* 124 */
 /***/ function(module, exports, __webpack_require__) {
 
