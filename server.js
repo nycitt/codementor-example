@@ -1,5 +1,6 @@
 var setup = require('./setup');
 var _ = require('underscore');
+var cats = require('./routes/cats');
 
 var app = {
 	init: function () {
@@ -12,28 +13,17 @@ var app = {
 			'localTunnel',
 			// 'twilio',
 			'mailgun',
-			// 'parse'
+			'parse'
 		];
 
 		_.each(modules, function (module) {
 			setup[module].call(this);
 		}, this);
 
-		this.app.post('/cats', function (req, res) {
-			app.mailgun.sendText(
-			  	'adz@nycitt.com',
-			    'adz@nycitt.com',
-			    'Hello Works',
-			    req.body.text,
-			    function (err) {
-			    	if (!err) {
-			    		res.json({
-			    			success: true
-			    		})
-			    	}
-			    }
-			);
-		});
+		this.app.get('/api/cats', cats.get);
+		this.app.post('/api/cats', cats.post);
+		this.app.put('/api/cats/:id', cats.update);
+		// this.app.delete('/cats', cats.post);
 
 		// Put after all your this.app.get/post routes
 		setup.pushState.call(this);
